@@ -115,7 +115,7 @@ There are two distinct items with the same name in the same scope but different 
 * the *module-companion* `my_fn` in the type namespace,
 * the *accompanied function* `my_fn` in the value namespace.
 
-This can be unexpected for developers and tools. However, derive macros and the traits that they implement also share the name, so it is not too unexpected.
+This can be unexpected for developers and tools. However, derive macros and the traits that they implement also often share the name, so it is not too unexpected.
 
 ### Module-companion for an inherent function on a type is poorly supported
 
