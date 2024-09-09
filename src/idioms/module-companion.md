@@ -117,12 +117,12 @@ There are two distinct items with the same name in the same scope but different 
 
 This can be unexpected for developers and tools. However, derive macros and the traits that they implement also often share the name, so it is not too unexpected.
 
-### Module-companion for an inherent function on a type is poorly supported
+### Module-companion for an associated function for a type is poorly supported
 
 While *module-companions* for standalone functions are well-supported, the same is not true for associated functions on types (structs and enums). This is because the *module-companion*
 
 * for an inherent function on a type would have to be a submodule of the type and
-* for a trait-associated function on a type would have to be a submodule of the trait,
+* for a trait-associated function for a type would have to be a submodule of the trait,
 
 neither of which is allowed in Rust.
 
