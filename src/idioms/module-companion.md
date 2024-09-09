@@ -115,15 +115,20 @@ There are two distinct items with the same name in the same scope but different 
 * the *module-companion* `my_fn` in the type namespace,
 * the *accompanied function* `my_fn` in the value namespace.
 
-This can be unexpected for developers and tools.
+This can be unexpected for developers and tools. However, derive macros and the traits that they implement also share the name, so it is not too unexpected.
 
 ### Module-companion for an inherent function on a type is poorly supported
 
-While *module-companions* for standalone functions are well-supported, the same is not true for inherent functions on types (structs and enums). This is because the *module-companion* for an inherent function on a type would have to be a submodule of the type, which is not allowed in Rust.
+While *module-companions* for standalone functions are well-supported, the same is not true for associated functions on types (structs and enums). This is because the *module-companion*
+
+* for an inherent function on a type would have to be a submodule of the type and
+* for a trait-associated function on a type would have to be a submodule of the trait,
+
+neither of which is allowed in Rust.
 
 ### Rustdoc documentation could be improved
 
-The documentation for the *module-companion* is not directly associated with the *accompanied function* in the generated documentation. This can make it harder for developers to understand the relationship between the two.
+The documentation for the *module-companion* is not directly associated with the *accompanied function* in the generated documentation. This can make it harder for developers to understand the relationship between the two. However, fixing rustdoc to support this does not seem to be a difficult task.
 
 ## Footnotes
 
