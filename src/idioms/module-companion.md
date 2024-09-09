@@ -104,6 +104,10 @@ The *module-companion* can be used to encapsulate the implementation details of 
 
 The *module-companion* can be used to define a struct for the "parameter object" pattern, which can help in reducing the number of arguments passed to the *accompanied function* with the help of [default idiom]. This can make the call sites cleaner and more readable due to the "syntactic" parallelism (`my_fn::Args { ... }` and `my_fn()`).
 
+### Availability in the function signature
+
+There is also an idiom where helper items for the function are defined in its body. Compared to that idiom, module-companion idiom has the advantage that the items from the *module-companion* are available in the function signature.
+
 ## Drawbacks
 
 ### Lacking language support
