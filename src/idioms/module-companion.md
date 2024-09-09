@@ -4,6 +4,11 @@
 
 In Rust, functions belong to the value [namespace], while modules belong to the type namespace. This results in a possibility of having a function and a module with the same name in the same scope [^1].
 
+This idiom is similar in spirit to
+
+* ["companion object"] idiom in Scala and Kotlin,
+* `TraitName` and `derive(TraitName)` idiom in Rust. For example, `serde::Serialize`&nbsp;(&nbsp;[trait](https://docs.rs/serde/latest/serde/trait.Serialize.html)&nbsp;|&nbsp;[derive macro](https://docs.rs/serde/latest/serde/derive.Serialize.html)&nbsp;).
+
 Having a module with the same name as a function can be useful for containing items (e.g. helper functions, constants, and types) that are related to that function. [^2]
 
 Notably, it can contain
@@ -11,7 +16,17 @@ Notably, it can contain
 * a struct for the "parameter object" pattern,
 * an error enum for the *accompanied function* [^3].
 
-## Example
+## Degenerate example
+
+```
+pub mod my_fn {}
+
+pub fn my_fn() {
+    unimplemented!()
+}
+```
+
+## Less-contrived example
 
 **a.rs**:
 
@@ -23,6 +38,7 @@ pub mod my_fn {
         // ...
     }
 
+    // Can implement Default for the "parameter object"
     pub struct Args {
         pub first_name: String,
         pub last_name: String,
@@ -65,6 +81,7 @@ fn another_fn() -> anyhow::Result<()> {
         is_awesome: true,
         is_lovely: true,
         // ...
+        // ..my_fn::Args::default()
     };
 
     my_fn(args)?;
@@ -85,13 +102,13 @@ The *module-companion* can be used to encapsulate the implementation details of 
 
 ### Clean call sites
 
-The *module-companion* can be used to define a struct for the "parameter object" pattern, which can help in reducing the number of arguments passed to the *accompanied function*. This can make the call sites cleaner and more readable due to the "syntactic" parallelism (`my_fn::Args { ... }` and `my_fn()`).
+The *module-companion* can be used to define a struct for the "parameter object" pattern, which can help in reducing the number of arguments passed to the *accompanied function* with the help of [default idiom]. This can make the call sites cleaner and more readable due to the "syntactic" parallelism (`my_fn::Args { ... }` and `my_fn()`).
 
 ## Drawbacks
 
 ### Lacking language support
 
-The language support for this idiom is limited, so there are some rough edges that need to be worked around.
+The language support for this idiom is limited, which is the root cause for the problems below.
 While pragmatically related, from the Rust language's perspective, the *module-companion* and the *accompanied function* are unrelated items.
 
 ### Verbosity in the function signature
@@ -136,9 +153,11 @@ The documentation for the *module-companion* is not directly associated with the
 [^2]: Note that [procedural macros] are implemented as functions, so this idiom can be used to group the implementation details of individual procedural macros.
 [^3]: For an error enum in a *companion-module*, you can consider using the [`thiserror`] crate to derive [`Error`] and [`Display`] traits. Also see the [comment about "library-like" and "application-like" errors][errors-comment] on reddit by `@dtolnay`.
 
+["companion object"]: https://docs.scala-lang.org/overviews/scala-book/companion-objects.html
 [namespace]: https://doc.rust-lang.org/reference/names/namespaces.html
 [procedural macros]: https://doc.rust-lang.org/reference/procedural-macros.html
 [`Error`]: https://doc.rust-lang.org/std/error/trait.Error.html
 [`Display`]: https://doc.rust-lang.org/std/fmt/trait.Display.html
 [`thiserror`]: https://crates.io/crates/thiserror
 [errors-comment]: https://www.reddit.com/r/rust/comments/dfs1zk/comment/f35iopj/
+[default idiom]: https://rust-unofficial.github.io/patterns/idioms/default.html
