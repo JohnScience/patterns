@@ -184,7 +184,7 @@ However, it is not always the case, and the pattern can be useful for example wh
 [^1]: Within this article, the term "scope" - unless stated otherwise - is used loosely to refer to the collection of items (e.g. constants, structs, and functions) that belong to any of the Rust's [namespace]s and that are "visible" as a result of being defined or imported.
 [^2]: Note that [procedural macros] are implemented as functions, so this idiom can be used to group the implementation details of individual procedural macros.
 [^3]: For an error enum in a *companion-module*, you can consider using the [`thiserror`] crate to derive [`Error`] and [`Display`] traits. Also see the [comment about "library-like" and "application-like" errors][errors-comment] on reddit by `@dtolnay`.
-[^4]: Eventually, if the [`fn_traits` feature] is stabilized, the `impl StructName` or `impl TraitName for StructName` syntax could be used to define the function-centric items. However, the issue has been open since November 2015.
+[^4]: Eventually, if the [`fn_traits` feature] is stabilized, the `impl StructName` or `impl TraitName for StructName` syntax could be used to define the function-centric items. However, the issue has been open since November 2015 and the conversion from `fn fn_name` to the (1) struct definition, (2) `Fn` trait implementation, (3) function constant definition, (4) implementation block for the associated items, - would introduce considerably more code, albeit for the benefit of explicity and "naturality".
 
 ["companion object"]: https://docs.scala-lang.org/overviews/scala-book/companion-objects.html
 [namespace]: https://doc.rust-lang.org/reference/names/namespaces.html
