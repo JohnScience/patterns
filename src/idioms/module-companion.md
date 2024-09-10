@@ -108,6 +108,10 @@ The *module-companion* can be used to define a struct for the "parameter object"
 
 There is also an idiom where helper items for the function are defined in its body. Compared to that idiom, module-companion idiom has the advantage that the items from the *module-companion* are available in the function signature.
 
+### Ability to name exclusively function-centric items
+
+This pattern allows to give a sensible name to the items that are strictly function-centric and do not make sense on their own. This can help in making the code more readable and maintainable.
+
 ## Drawbacks
 
 ### Lacking language support
