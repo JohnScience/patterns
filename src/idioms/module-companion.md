@@ -4,7 +4,7 @@
 
 In Rust, functions belong to the value [namespace], while modules belong to the type namespace. This results in a possibility of having a function and a module with the same name in the same scope [^1].
 
-This idiom is similar in spirit to
+This idiom - *in the sense of a group of code fragments sharing an equivalent semantic role for specific language rather than a collection of code fragments that are considered conventional and supported by the community of that language* - is similar in spirit to
 
 * ["companion object"] idiom in Scala and Kotlin,
 * `TraitName` and `derive(TraitName)` idiom in Rust. For example, `serde::Serialize`&nbsp;(&nbsp;[trait](https://docs.rs/serde/latest/serde/trait.Serialize.html)&nbsp;|&nbsp;[derive macro](https://docs.rs/serde/latest/serde/derive.Serialize.html)&nbsp;).
@@ -28,7 +28,7 @@ pub fn my_fn() {
 
 ## Less-contrived example
 
-**a.rs**:
+**a.rs** (definition site):
 
 ```
 pub mod my_fn {
@@ -67,7 +67,7 @@ pub fn my_fn(arg: my_fn::Args) -> Result<(), my_fn::Error> {
 }
 ```
 
-**b.rs**:
+**b.rs** (call site):
 
 ```
 // imports both the accompanied function and the module-companion `my_fn`
@@ -149,7 +149,31 @@ neither of which is allowed in Rust.
 
 ### Rustdoc documentation could be improved
 
-The documentation for the *module-companion* is not directly associated with the *accompanied function* in the generated documentation. This can make it harder for developers to understand the relationship between the two. However, fixing rustdoc to support this does not seem to be a difficult task.
+The documentation for the *module-companion* is not directly associated with the *accompanied function* in the generated documentation. This can make it harder for developers to understand the relationship between the two. However, fixing rustdoc to support "Same-name items" does not seem to be a difficult task.
+
+### Arcane definition site
+
+Considerable amount of people who were asked about this idiom mentioned that the definition site of the *module-companion* looks "odd" or "arcane".
+
+The oddness of the definition site is counterbalanced by the readability of the call site.
+
+### Limited good use cases even when "possible"
+
+* In many - but not all - cases, you can...
+
+    1. pick a reasonable name for the arguments that would not be function-centric,
+    2. "invert" the association relationship and thus use a struct with associated items.
+
+* If the "inversion" of the assocation relationship is impossible but the associated items can be given a reasonable name, you can consider use a module-per-function approach.
+
+One can argue that this pattern is undesirable because there are often better alternatives.
+
+However, it is not always the case, and the pattern can be useful for example when
+
+* The associated items are strictly function-centric and do not make sense on their own,
+* The function is complex and the benefits from the pattern outweigh the drawbacks.
+
+*Note: little awareness about the idiom is not considered a drawback in this entry but may considered such by a considerable amount of developers. At the time of writing the article, this idiom is far from being widely known.*
 
 ## Footnotes
 
