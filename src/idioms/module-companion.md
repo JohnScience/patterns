@@ -110,7 +110,7 @@ There is also an idiom where helper items for the function are defined in its bo
 
 ### Ability to name exclusively function-centric items
 
-This pattern allows to give a sensible name to the items that are strictly function-centric and do not make sense on their own. This can help in making the code more readable and maintainable.
+This pattern allows to give a sensible name to the items that are strictly function-centric and do not make sense on their own. [^4] This can help in making the code more readable and maintainable.
 
 ## Drawbacks
 
@@ -184,6 +184,7 @@ However, it is not always the case, and the pattern can be useful for example wh
 [^1]: Within this article, the term "scope" - unless stated otherwise - is used loosely to refer to the collection of items (e.g. constants, structs, and functions) that belong to any of the Rust's [namespace]s and that are "visible" as a result of being defined or imported.
 [^2]: Note that [procedural macros] are implemented as functions, so this idiom can be used to group the implementation details of individual procedural macros.
 [^3]: For an error enum in a *companion-module*, you can consider using the [`thiserror`] crate to derive [`Error`] and [`Display`] traits. Also see the [comment about "library-like" and "application-like" errors][errors-comment] on reddit by `@dtolnay`.
+[^4]: Eventually, if the [`fn_traits` feature] is stabilized, the `impl StructName` or `impl TraitName for StructName` syntax could be used to define the function-centric items. However, the issue has been open since November 2015.
 
 ["companion object"]: https://docs.scala-lang.org/overviews/scala-book/companion-objects.html
 [namespace]: https://doc.rust-lang.org/reference/names/namespaces.html
@@ -193,3 +194,4 @@ However, it is not always the case, and the pattern can be useful for example wh
 [`thiserror`]: https://crates.io/crates/thiserror
 [errors-comment]: https://www.reddit.com/r/rust/comments/dfs1zk/comment/f35iopj/
 [default idiom]: https://rust-unofficial.github.io/patterns/idioms/default.html
+[`fn_traits` feature]: https://github.com/rust-lang/rust/issues/29625
